@@ -6,11 +6,11 @@ use opencl::hl::KernelArg;
 use opencl::mem::{Buffer, CLBuffer};
 use libc;
 
-use array::Array;
-use context::Context;
-use helper;
-use num::Num;
-use range_arg::RangeArg;
+use crate::array::Array;
+use crate::context::Context;
+use crate::helper;
+use crate::num::Num;
+use crate::range_arg::RangeArg;
 
 pub enum TensorMode {
     In,
@@ -68,7 +68,7 @@ impl<T: Num> Tensor<T> {
     pub fn read(&self, ctx: &Context, array: &mut Array<T>) {
         ctx.queue.read(&self.buffer, &mut array.buffer_mut(), &**self.get_event());
     }
-    
+
     pub fn set(&self, ctx: &Context, array: &Array<T>) {
         ctx.queue.write(&self.buffer, &array.buffer(), ());
     }
@@ -84,7 +84,7 @@ impl<T: Num> Tensor<T> {
     pub fn len(&self) -> usize {
         self.buffer.len()
     }
-    
+
     pub fn set_event(&self, e: Rc<Event>) {
         *self.event.borrow_mut() = e;
     }

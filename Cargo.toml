@@ -2,6 +2,7 @@
 name = "gpuarray"
 version = "0.1.0"
 authors = ["Theodore DeRego <tderego94@gmail.com>"]
+edition = "2018"
 
 [dependencies.opencl]
 git = "https://github.com/tedsta/rust-opencl"

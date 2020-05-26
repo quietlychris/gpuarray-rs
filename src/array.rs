@@ -1,7 +1,7 @@
 use std::fmt;
 use std::ops::{Index, IndexMut};
 
-use helper;
+use crate::helper;
 
 // A n-dimensional array
 pub struct Array<T> {
@@ -53,7 +53,7 @@ impl<T> Array<T> {
                                  .sum();
         &mut self.buffer[index]
     }
-    
+
     pub fn shape(&self) -> &[usize] {
         &self.shape
     }
@@ -87,15 +87,15 @@ impl<'a, 'b, T, I: IntoIterator<Item=&'b usize>> IndexMut<I> for Array<T> {
 
 impl<T: Clone+fmt::Debug> fmt::Debug for Array<T> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        try!(write!(f, "[\n"));
+        write!(f, "[\n")?;
         for row in 0..self.shape[0] {
-            try!(write!(f, "[{:?}", self.get(&[row, 0])));
+            write!(f, "[{:?}", self.get(&[row, 0]))?;
             for col in 1..self.shape[1] {
-                try!(write!(f, "\t{:?}", self.get(&[row, col])));
+                write!(f, "\t{:?}", self.get(&[row, col]))?;
             }
-            try!(write!(f, "]\n"));
+            write!(f, "]\n")?;
         }
-        try!(write!(f, "]\n"));
+        write!(f, "]\n")?;
         Ok(())
     }
 }

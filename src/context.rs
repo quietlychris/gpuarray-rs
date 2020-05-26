@@ -1,6 +1,6 @@
 use opencl;
 
-use kernels::Kernels;
+use crate::kernels::Kernels;
 
 pub struct Context {
     pub device: opencl::hl::Device,

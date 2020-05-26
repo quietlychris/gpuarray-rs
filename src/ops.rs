@@ -1,10 +1,10 @@
 use std::rc::Rc;
 use std::cell::Ref;
 
-use context::Context;
-use num::Num;
-use tensor::{Event, Tensor, TensorView};
-use range_arg::RangeArg;
+use crate::context::Context;
+use crate::num::Num;
+use crate::tensor::{Event, Tensor, TensorView};
+use crate::range_arg::RangeArg;
 
 pub fn copy_to<T: Num>(ctx: &Context, a: &Tensor<T>, output: &Tensor<T>) {
     let kernel = ctx.kernels().copy_to::<T>();
@@ -365,7 +365,7 @@ pub fn fill_slice<T: Num, AR: AsRef<[RangeArg]>>(ctx: &Context, a: &TensorView<T
     kernel.set_arg(1, &val);
     kernel.set_arg(2, &a_dim_steps);
     kernel.set_arg(3, &a_offsets);
-    
+
     let mut work_dim = [1; 3];
     for i in 0..a.shape.len() {
         work_dim[2-i] = a.view_shape(a.shape.len()-1-i);
@@ -397,7 +397,7 @@ pub fn copy_to_slice<T: Num, AR, BR>(ctx: &Context,
     kernel.set_arg(3, &a_offsets);
     kernel.set_arg(4, &b_dim_steps);
     kernel.set_arg(5, &b_offsets);
-    
+
     let mut work_dim = [1; 3];
     for i in 0..a.shape.len() {
         work_dim[2-i] = a.view_shape(a.shape.len()-1-i);
@@ -436,7 +436,7 @@ pub fn add_slice<T: Num, AR, BR, CR>(ctx: &Context,
     kernel.set_arg(6, &b_offsets);
     kernel.set_arg(7, &out_dim_steps);
     kernel.set_arg(8, &out_offsets);
-    
+
     let mut work_dim = [1; 3];
     for i in 0..a.shape.len() {
         work_dim[2-i] = a.view_shape(a.shape.len()-1-i);
@@ -476,7 +476,7 @@ pub fn multiply_slice<T: Num, AR, BR, CR>(ctx: &Context,
     kernel.set_arg(6, &b_offsets);
     kernel.set_arg(7, &out_dim_steps);
     kernel.set_arg(8, &out_offsets);
-    
+
     let mut work_dim = [1; 3];
     for i in 0..a.shape.len() {
         work_dim[2-i] = a.view_shape(a.shape.len()-1-i);
@@ -663,7 +663,7 @@ fn tensor_add() {
     let c_cl: Tensor<i32> = Tensor::new(ctx, vec![5, 10000], TensorMode::Out);
 
     add(ctx, &a_cl, -1, &b_cl, &c_cl);
-    
+
     let c = c_cl.get(ctx);
 
     for i in 0..5 {
@@ -861,7 +861,7 @@ fn test_add_slice() {
                                                 6, 7, 8,
                                                 10, 11, 12,
                                                 14, 15, 16,
-                                                
+
                                                 17, 18, 19,
                                                 20, 21, 22,
                                                 23, 24, 25,
@@ -900,7 +900,7 @@ fn test_multiply_slice() {
                                                 6, 7, 8,
                                                 10, 11, 12,
                                                 14, 15, 16,
-                                                
+
                                                 17, 18, 19,
                                                 20, 21, 22,
                                                 23, 24, 25,

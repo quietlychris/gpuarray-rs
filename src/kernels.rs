@@ -3,7 +3,7 @@ use std::collections::HashMap;
 
 use opencl::hl::{Kernel, Program};
 
-use num::Num;
+use crate::num::Num;
 
 macro_rules! kernels_hashmap {
     ( $program:ident, $kernel_name:expr, $( $t:ty ),* ) => {
@@ -106,7 +106,7 @@ impl Kernels {
     pub fn sum<T: Num>(&self) -> &Kernel {
         &self.sum[&TypeId::of::<T>()]
     }
-    
+
     pub fn add<T: Num>(&self) -> &Kernel {
         &self.add[&TypeId::of::<T>()]
     }
